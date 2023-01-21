@@ -5,6 +5,13 @@
   {{ tot$ | async }}
 </p>
 
+<p *ngFor="let country of tot$ | async">
+  {{ country.value }}, {{ country.country }}
+  <li *ngFor="let part of country.participations">
+    {{ part.year }} {{ part.city }} Nombre de médailles : {{ part.medalsCount }}
+  </li>
+</p>
+
 <p>Total number of medals :</p>
 
 <p>country-details works!</p>

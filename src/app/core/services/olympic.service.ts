@@ -45,9 +45,9 @@ export class OlympicService {
   getMedalsPerCountry(id: number): Observable<number> {
     return this.getCountry(id).pipe(
       map((country: any) =>
-        country.participations.map((y: any) => y.athleteCount)
+        country.participations.map((y: any) => y.athleteCount * 1)
       ),
-      map((x: number) => x + 3)
+      reduce((a: number, b: number) => a + b, 0)
     );
   }
 

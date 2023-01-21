@@ -98,6 +98,6 @@ export class CountryDetailsComponent implements OnInit {
     this.getData();
     console.log(this.sums());
     this.tot$ = this.olympicService.getMedalsPerCountry(countryId);
-    this.tot$.subscribe((x) => console.log(x));
+    this.tot$.pipe(take(1)).subscribe((x) => console.log(x));
   }
 }
