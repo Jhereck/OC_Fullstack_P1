@@ -1,0 +1,13 @@
+<p>Number of entries : {{ (country$ | async)?.participations.length }}</p>
+<p>
+  Total number of medals :
+  {{ (country$ | async)?.participations.medalsCount }}
+  {{ tot$ | async }}
+</p>
+
+<p>Total number of medals :</p>
+
+<p>country-details works!</p>
+<div id="divChart">
+  <canvas id="myChart"></canvas>
+</div>

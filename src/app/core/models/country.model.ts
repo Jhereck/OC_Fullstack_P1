@@ -7,3 +7,10 @@ example of an olympic country:
     participations: []
 }
 */
+export class Country {
+  constructor(
+    public id: number,
+    public country: string,
+    public participations: any
+  ) {}
+}

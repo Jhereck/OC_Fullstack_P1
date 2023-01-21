@@ -1,3 +1,15 @@
 <h2>Olympic games app</h2>
 <hr />
-<p>{{ (olympics$ | async)?.length }} data loaded</p>
+<p>{{ (countries$ | async)?.length }} data loaded</p>
+<p>{{ countries$ | async }} data loaded</p>
+
+<p *ngFor="let country of countries$ | async">
+  {{ country.id }}, {{ country.country }}
+  <li *ngFor="let part of country.participations">
+    {{ part.year }} {{ part.city }} Nombre de médailles : {{ part.medalsCount }}
+  </li>
+</p>
+
+<div id="divChart">
+  <canvas id="myChart"></canvas>
+</div>

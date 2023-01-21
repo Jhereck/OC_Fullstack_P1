@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { catchError, tap, map, reduce, scan, concatWith } from 'rxjs/operators';
+import { Country } from 'src/app/core/models/country.model';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +14,7 @@ export class OlympicService {
   constructor(private http: HttpClient) {}
 
   loadInitialData() {
-    return this.http.get<any>(this.olympicUrl).pipe(
+    return this.http.get<any[]>(this.olympicUrl).pipe(
       tap((value) => this.olympics$.next(value)),
       catchError((error, caught) => {
         // TODO: improve error handling
@@ -27,5 +28,34 @@ export class OlympicService {
 
   getOlympics() {
     return this.olympics$.asObservable();
+  }
+
+  getAllCountries(): Observable<any> {
+    return this.http.get<any>('./assets/mock/olympic.json');
+  }
+
+  getCountry(id: number): Observable<any> {
+    return this.getAllCountries().pipe(
+      map((countries: any) =>
+        countries.find((country: any) => country.id == id)
+      )
+    );
+  }
+
+  getMedalsPerCountry(id: number): Observable<number> {
+    return this.getCountry(id).pipe(
+      map((country: any) =>
+        country.participations.map((y: any) => y.athleteCount)
+      ),
+      map((x: number) => x + 3)
+    );
+  }
+
+  getMedalsPerCountrys(id: number): Observable<number> {
+    return this.getCountry(id).pipe(
+      map((country: any) => country.participations.map((y: any) => y.id)),
+      map((x) => parseInt(x)),
+      reduce((a: number, b: number) => a + b, 0)
+    );
   }
 }
