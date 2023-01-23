@@ -1,20 +1,14 @@
-<p>Number of entries : {{ (country$ | async)?.participations.length }}</p>
-<p>
-  Total number of medals :
-  {{ (country$ | async)?.participations.medalsCount }}
-  {{ tot$ | async }}
-</p>
+<button (click)="goBack()">Retour</button>
 
-<p *ngFor="let country of tot$ | async">
-  {{ country.value }}, {{ country.country }}
-  <li *ngFor="let part of country.participations">
-    {{ part.year }} {{ part.city }} Nombre de médailles : {{ part.medalsCount }}
-  </li>
-</p>
+<p>Name of the country : {{ (country$ | async).country }}</p>
+<div>
+  <span
+    >Number of entries : {{ (country$ | async)?.participations.length }}</span
+  >
+  <span>Total number of medals : {{ totMedals$ | async }}</span>
+  <span>Total number of athletes : {{ totAthletes$ | async }}</span>
+</div>
 
-<p>Total number of medals :</p>
-
-<p>country-details works!</p>
 <div id="divChart">
   <canvas id="myChart"></canvas>
 </div>

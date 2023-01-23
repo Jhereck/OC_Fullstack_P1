@@ -4,6 +4,7 @@ import { Observable, of, pipe } from 'rxjs';
 import { Chart, registerables } from 'chart.js';
 import { OlympicService } from 'src/app/core/services/olympic.service';
 import { ActivatedRoute, RouterModule, Routes } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-country-details',
@@ -13,37 +14,15 @@ import { ActivatedRoute, RouterModule, Routes } from '@angular/router';
 export class CountryDetailsComponent implements OnInit {
   chart: any = [];
   datas: any = [];
-  tot$: Observable<any> = of(null);
+  totMedals$: Observable<number> = of(0);
+  totAthletes$: Observable<number> = of(0);
   country$: Observable<any> = of(null);
 
   constructor(
     private olympicService: OlympicService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private location: Location
   ) {}
-
-  sumss() {
-    return this.country$.pipe(
-      map((country: any) =>
-        country.participations.medalsCount.reduce(
-          (a: number, b: number) => a + b,
-          0
-        )
-      )
-    );
-  }
-
-  sums() {
-    return this.country$.pipe(take(1)).subscribe({
-      next: (v) => {
-        var tot = v.participations
-          .map((x: any) => x.medalsCount)
-          .reduce((a: number, b: number) => a + b, 0);
-        console.log(tot);
-      },
-      error: (e) => console.log(e),
-      complete: () => console.info('ok'),
-    });
-  }
 
   getData() {
     this.country$.pipe(take(1)).subscribe({
@@ -92,12 +71,16 @@ export class CountryDetailsComponent implements OnInit {
     });
   }
 
+  goBack(): void {
+    this.location.back();
+  }
+
   ngOnInit(): void {
     const countryId = +this.route.snapshot.params['id'];
     this.country$ = this.olympicService.getCountry(countryId);
     this.getData();
-    console.log(this.sums());
-    this.tot$ = this.olympicService.getMedalsPerCountry(countryId);
-    this.tot$.pipe(take(1)).subscribe((x) => console.log(x));
+    this.totMedals$ = this.olympicService.getMedalsPerCountry(countryId);
+    this.totAthletes$ = this.olympicService.getAthletesPerCountry(countryId);
+    this.totMedals$.pipe(take(1)).subscribe((x) => console.log(x));
   }
 }

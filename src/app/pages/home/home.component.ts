@@ -76,6 +76,13 @@ export class HomeComponent implements OnInit {
                 beginAtZero: true,
               },
             },
+
+            onClick(e, x) {
+              window.open(
+                'http://localhost:4200/details/' + (x[0].index + 1),
+                '_self'
+              );
+            },
           },
         });
       });
