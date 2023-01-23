@@ -21,87 +21,67 @@ export class HomeComponent implements OnInit {
 
   constructor(private olympicService: OlympicService) {}
 
-  getData(): void {
-    this.countries$ = this.olympicService.getAllCountries();
-  }
-
-  getDatas(): void {
-    this.olympicService
-      .getAllCountries()
-      .pipe(take(1))
-      .subscribe((res: any) => {
-        res.forEach((country: any) => {
-          var sum = 0;
-          country.participations.forEach((part: any) => {
-            sum += part.medalsCount;
-          });
-          this.countries.push({
-            id: country.id,
-            country: country.country,
-            totalMeds: sum,
-          });
+  constructChart(): void {
+    this.countries$.pipe(take(1)).subscribe((res: any) => {
+      res.forEach((country: any) => {
+        var sum = 0;
+        country.participations.forEach((part: any) => {
+          sum += part.medalsCount;
         });
-
-        var myChart = new Chart('myChart', {
-          type: 'pie',
-          data: {
-            labels: this.countries.map((x: any) => x.country),
-            datasets: [
-              {
-                label: '# of medals',
-                data: this.countries.map((x: any) => x.totalMeds),
-                backgroundColor: [
-                  'rgba(255, 99, 132, 0.2)',
-                  'rgba(54, 162, 235, 0.2)',
-                  'rgba(255, 206, 86, 0.2)',
-                  'rgba(75, 192, 192, 0.2)',
-                  'rgba(153, 102, 255, 0.2)',
-                  'rgba(255, 159, 64, 0.2)',
-                ],
-                borderColor: [
-                  'rgba(255, 99, 132, 1)',
-                  'rgba(54, 162, 235, 1)',
-                  'rgba(255, 206, 86, 1)',
-                  'rgba(75, 192, 192, 1)',
-                  'rgba(153, 102, 255, 1)',
-                  'rgba(255, 159, 64, 1)',
-                ],
-                borderWidth: 1,
-              },
-            ],
-          },
-          options: {
-            scales: {
-              y: {
-                beginAtZero: true,
-              },
-            },
-
-            onClick(e, x) {
-              window.open(
-                'http://localhost:4200/details/' + (x[0].index + 1),
-                '_self'
-              );
-            },
-          },
+        this.countries.push({
+          id: country.id,
+          country: country.country,
+          totalMeds: sum,
         });
       });
+
+      var myChart = new Chart('myChart', {
+        type: 'pie',
+        data: {
+          labels: this.countries.map((x: any) => x.country),
+          datasets: [
+            {
+              label: '# of medals',
+              data: this.countries.map((x: any) => x.totalMeds),
+              backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)',
+              ],
+              borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)',
+              ],
+              borderWidth: 1,
+            },
+          ],
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true,
+            },
+          },
+
+          onClick(e, x) {
+            window.open('/details/' + (x[0].index + 1), '_self');
+          },
+        },
+      });
+    });
   }
 
   ngOnInit(): void {
-    /*   this.olympics$ = this.olympicService.getOlympics();
+    /*   this.olympics$ = this.olympicService.getOlympics(); */
 
-    this.olympics$.subscribe((val) => {
-      this.countries.push(val);
-      console.log(this.countries);
-    });
-
-    console.log(this.countries2);
-
-    */
-
-    this.getDatas();
-    this.getData();
-    this.mycountry = new Country(2, 'Italy', []);
+    this.countries$ = this.olympicService.getAllCountries();
+    this.constructChart();
   }
 }

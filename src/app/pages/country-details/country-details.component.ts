@@ -24,7 +24,7 @@ export class CountryDetailsComponent implements OnInit {
     private location: Location
   ) {}
 
-  getData() {
+  constructChart() {
     this.country$.pipe(take(1)).subscribe({
       next: (val) => {
         console.log(val);
@@ -78,7 +78,7 @@ export class CountryDetailsComponent implements OnInit {
   ngOnInit(): void {
     const countryId = +this.route.snapshot.params['id'];
     this.country$ = this.olympicService.getCountry(countryId);
-    this.getData();
+    this.constructChart();
     this.totMedals$ = this.olympicService.getMedalsPerCountry(countryId);
     this.totAthletes$ = this.olympicService.getAthletesPerCountry(countryId);
     this.totMedals$.pipe(take(1)).subscribe((x) => console.log(x));
