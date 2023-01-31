@@ -1,12 +1,24 @@
-<button (click)="goBack()">Retour</button>
+<div class="head head-wrapper">
+  <button class="back" (click)="goBack()">Retour</button>
 
-<p>Name of the country : {{ (country$ | async).country }}</p>
-<div>
-  <span
-    >Number of entries : {{ (country$ | async)?.participations.length }}</span
+  <span class="name-country title">
+    <strong>{{ (country$ | async)?.country }}</strong></span
   >
-  <span>Total number of medals : {{ totMedals$ | async }}</span>
-  <span>Total number of athletes : {{ totAthletes$ | async }}</span>
+
+  <span class="ghost"></span>
+</div>
+<div class="stats">
+  <span class="number number-entries"
+    >Number of entries :
+    <strong>{{ (country$ | async)?.participations.length }}</strong></span
+  >
+  <span class="number number-medals"
+    >Total number of medals : <strong>{{ totMedals$ | async }}</strong></span
+  >
+  <span class="number number-athletes"
+    >Total number of athletes :
+    <strong>{{ totAthletes$ | async }}</strong></span
+  >
 </div>
 
 <div id="divChart">

@@ -1,14 +1,15 @@
+<h1><p class="title">Medals per Country</p></h1>
 <h2>Olympic games app</h2>
-<hr />
-<p>{{ (countries$ | async)?.length }} data loaded</p>
-<p>{{ countries$ | async }} data loaded</p>
 
-<p *ngFor="let country of countries$ | async">
-  {{ country.id }}, {{ country.country }}
-  <li *ngFor="let part of country.participations">
-    {{ part.year }} {{ part.city }} Nombre de médailles : {{ part.medalsCount }}
-  </li>
-</p>
+<div class="stats">
+  <span class="number number-jo"
+    >Number of JO : <strong>{{ totalJO$ | async }}</strong></span
+  >
+  <span class="number number-countries"
+    >Number of countries :
+    <strong>{{ (countries$ | async)?.length }}</strong></span
+  >
+</div>
 
 <div id="divChart">
   <canvas id="myChart"></canvas>

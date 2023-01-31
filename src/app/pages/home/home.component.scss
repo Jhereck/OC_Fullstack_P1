@@ -1,0 +1,33 @@
+h1,
+h2 {
+  text-align: center;
+}
+
+.title {
+  display: table;
+  padding: 1rem;
+  background-color: hsl(154, 100%, 27%);
+  margin-left: auto;
+  margin-right: auto;
+  color: white;
+  border-radius: 1rem;
+}
+
+.stats {
+  display: flex;
+}
+.number {
+  display: block;
+  border-style: solid;
+  border-color: hsl(154, 100%, 27%);
+  padding: 1rem;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 1rem;
+}
+#divChart {
+  position: relative;
+  width: 50vw;
+  height: 100vh;
+  margin: 20px auto;
+}

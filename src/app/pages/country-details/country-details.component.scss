@@ -1,0 +1,42 @@
+.head {
+  display: flex;
+  justify-content: space-between;
+}
+.title {
+  display: table;
+  padding: 1rem;
+  background-color: hsl(154, 100%, 27%);
+  color: white;
+  border-radius: 1rem;
+}
+.back,
+.name-country {
+  margin: 1rem 1rem 1rem 1rem;
+  padding: 0.5rem 2rem;
+  display: block;
+}
+.back {
+  position: relative;
+}
+.name-country {
+  font-size: x-large;
+}
+.stats {
+  margin: 1rem 0 1rem 0;
+  display: flex;
+}
+.number {
+  display: block;
+  border-style: solid;
+  border-color: hsl(154, 100%, 27%);
+  padding: 1rem;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 1rem;
+}
+#divChart {
+  position: relative;
+  width: 70vw;
+  height: 100vh;
+  margin: 20px auto;
+}

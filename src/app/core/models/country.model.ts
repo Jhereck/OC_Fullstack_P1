@@ -11,6 +11,6 @@ export class Country {
   constructor(
     public id: number,
     public country: string,
-    public participations: any
+    public participations: any[]
   ) {}
 }

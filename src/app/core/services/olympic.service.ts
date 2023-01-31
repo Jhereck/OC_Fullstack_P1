@@ -61,4 +61,10 @@ export class OlympicService {
       )
     );
   }
+
+  getTotalNumberOfJO(id: number): Observable<number> {
+    return this.getCountry(id).pipe(
+      map((country: any) => country.participations.length)
+    );
+  }
 }

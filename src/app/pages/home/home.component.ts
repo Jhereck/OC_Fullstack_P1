@@ -12,7 +12,8 @@ Chart.register(...registerables);
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  countries$!: Observable<any[]>;
+  countries$: Observable<any> = of(null);
+  totalJO$: Observable<number> = of(0);
   countries: any = [];
   chart: any = [];
 
@@ -21,7 +22,7 @@ export class HomeComponent implements OnInit {
 
   constructor(private olympicService: OlympicService) {}
 
-  constructChart(): void {
+  initChart(): void {
     this.countries$.pipe(take(1)).subscribe((res: any) => {
       res.forEach((country: any) => {
         var sum = 0;
@@ -41,7 +42,7 @@ export class HomeComponent implements OnInit {
           labels: this.countries.map((x: any) => x.country),
           datasets: [
             {
-              label: '# of medals',
+              label: 'Number of medals',
               data: this.countries.map((x: any) => x.totalMeds),
               backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
@@ -64,11 +65,8 @@ export class HomeComponent implements OnInit {
           ],
         },
         options: {
-          scales: {
-            y: {
-              beginAtZero: true,
-            },
-          },
+          responsive: true,
+          maintainAspectRatio: true,
 
           onClick(e, x) {
             window.open('/details/' + (x[0].index + 1), '_self');
@@ -82,6 +80,7 @@ export class HomeComponent implements OnInit {
     /*   this.olympics$ = this.olympicService.getOlympics(); */
 
     this.countries$ = this.olympicService.getAllCountries();
-    this.constructChart();
+    this.initChart();
+    this.totalJO$ = this.olympicService.getTotalNumberOfJO(1);
   }
 }

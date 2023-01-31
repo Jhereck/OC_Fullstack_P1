@@ -24,18 +24,16 @@ export class CountryDetailsComponent implements OnInit {
     private location: Location
   ) {}
 
-  constructChart() {
+  initChart() {
     this.country$.pipe(take(1)).subscribe({
       next: (val) => {
-        console.log(val);
-        console.log(val.participations.map((x: any) => x.id));
         var myChart = new Chart('myChart', {
           type: 'line',
           data: {
             labels: val.participations.map((x: any) => x.year),
             datasets: [
               {
-                label: '# of medals',
+                label: 'Number of medals',
                 data: val.participations.map((x: any) => x.medalsCount),
                 backgroundColor: [
                   'rgba(255, 99, 132, 0.2)',
@@ -78,9 +76,8 @@ export class CountryDetailsComponent implements OnInit {
   ngOnInit(): void {
     const countryId = +this.route.snapshot.params['id'];
     this.country$ = this.olympicService.getCountry(countryId);
-    this.constructChart();
+    this.initChart();
     this.totMedals$ = this.olympicService.getMedalsPerCountry(countryId);
     this.totAthletes$ = this.olympicService.getAthletesPerCountry(countryId);
-    this.totMedals$.pipe(take(1)).subscribe((x) => console.log(x));
   }
 }
